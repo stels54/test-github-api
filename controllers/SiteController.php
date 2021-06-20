@@ -4,8 +4,7 @@ namespace app\controllers;
 
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
-use app\models\TblGithubUsers;
-use app\models\TblRepositories;
+use app\models\Repository;
 
 class SiteController extends Controller
 {
@@ -30,16 +29,7 @@ class SiteController extends Controller
     {
         return $this->render('index', [
             'dataProvider' => new ActiveDataProvider([
-                'query' => TblRepositories::find()
-            ])
-        ]);
-    }
-
-    public function actionUsers()
-    {
-        return $this->render('users', [
-            'dataProvider' => new ActiveDataProvider([
-                'query' => TblGithubUsers::find()
+                'query' => Repository::find()
             ])
         ]);
     }

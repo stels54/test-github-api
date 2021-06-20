@@ -39,7 +39,7 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Список репозиториев', 'url' => ['/site/index']],
-            ['label' => 'Пользователи', 'url' => ['site/users']],
+            ['label' => 'Пользователи', 'url' => ['/users/index']],
         ],
     ]);
     NavBar::end();
