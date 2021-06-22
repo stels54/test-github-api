@@ -14,7 +14,12 @@ class m210620_195644_tbl_github_users extends Migration
     {
         $this->createTable('tbl_github_users', [
             'id' => $this->primaryKey(),
-            'username' => $this->string()->notNull()->unique()
+            'login' => $this->string()->notNull()->unique(),
+            'avatar_url' => $this->string(),
+            'html_url' => $this->string(),
+            'name' => $this->string(),
+            'location' => $this->string(),
+            'created_at' => $this->timestamp()
         ]);
     }
 
