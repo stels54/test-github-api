@@ -2,9 +2,9 @@
 
 namespace app\models;
 
-use app\models\tables\TblGithubUsers;
+use app\models\tables\TblRepositories;
 
-class Repository extends TblGithubUsers
+class Repository extends TblRepositories
 {
 
 }

@@ -2,6 +2,8 @@
 
 namespace app\components\Github;
 
+use app\components\Github\Dto\UserDto;
+use app\components\Github\Dto\RepositoryDto;
 use Github\Client;
 
 class ApiManager
@@ -16,29 +18,31 @@ class ApiManager
         $this->client = new Client();
     }
 
-    public function userExists(string $username) : bool
+    public function getUser(string $username) :? UserDto
     {
         try {
-            $this->client->api('user')->show($username);
-            return true;
+            return new UserDto($this->client->api('user')->show($username));
         }catch (\Exception $e) {
             $this->handleErr($e);
         }
 
-        return false;
+        return null;
     }
 
     public function getUserRepositories(string $username) : array
     {
-        $repositories = [];
+        $result = [];
 
         try {
             $repositories = $this->client->api('user')->repositories($username, 'owner', 'updated', 'desc');
+            foreach ($repositories as $repository) {
+                $result[] = new RepositoryDto($repository);
+            }
         }catch (\Exception $e) {
             $this->handleErr($e);
         }
 
-        return $repositories;
+        return $result;
     }
 
     private function handleErr(\Exception $e) : void

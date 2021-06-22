@@ -1,7 +1,8 @@
 <?php
 
-namespace App\DTO;
+namespace app\components\Github\Dto;
 
+use app\components\Github\Dto\UserDto;
 use Spatie\DataTransferObject\FlexibleDataTransferObject;
 
 class RepositoryDto extends FlexibleDataTransferObject
@@ -21,13 +22,13 @@ class RepositoryDto extends FlexibleDataTransferObject
     /** @var bool $private */
     public $private;
 
-    /** @var mixed $owner */
+    /** @var array $owner */
     public $owner;
 
     /** @var string $html_url */
     public $html_url;
 
-    /** @var string $description */
+    /** @var mixed $description */
     public $description;
 
     /** @var bool $fork */
@@ -165,7 +166,7 @@ class RepositoryDto extends FlexibleDataTransferObject
     /** @var string $svn_url */
     public $svn_url;
 
-    /** @var string $homepage */
+    /** @var mixed $homepage */
     public $homepage;
 
     /** @var int $size */
@@ -177,7 +178,7 @@ class RepositoryDto extends FlexibleDataTransferObject
     /** @var int $watchers_count */
     public $watchers_count;
 
-    /** @var string $language */
+    /** @var mixed $language */
     public $language;
 
     /** @var bool $has_issues */

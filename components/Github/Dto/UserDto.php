@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTO;
+namespace app\components\Github\Dto;
 
 use Spatie\DataTransferObject\FlexibleDataTransferObject;
 
@@ -60,28 +60,28 @@ class UserDto extends FlexibleDataTransferObject
     /** @var bool $site_admin */
     public $site_admin;
 
-    /** @var string $name */
+    /** @var mixed $name */
     public $name;
 
-    /** @var string $company */
+    /** @var mixed $company */
     public $company;
 
     /** @var string $blog */
     public $blog;
 
-    /** @var string $location */
+    /** @var mixed $location */
     public $location;
 
     /** @var mixed $email */
     public $email;
 
-    /** @var bool $hireable */
+    /** @var mixed $hireable */
     public $hireable;
 
-    /** @var string $bio */
+    /** @var mixed $bio */
     public $bio;
 
-    /** @var string $twitter_username */
+    /** @var mixed $twitter_username */
     public $twitter_username;
 
     /** @var int $public_repos */

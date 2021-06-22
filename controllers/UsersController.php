@@ -2,10 +2,11 @@
 
 namespace app\controllers;
 
+use app\components\Github\ApiManager;
+use app\components\GithubUserUpdater;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use app\models\GithubUser;
-use app\models\forms\UserForm;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use Yii;
@@ -26,14 +27,14 @@ class UsersController extends Controller
             ],
         ];
     }
-    
+
     public function actionIndex()
     {
         return $this->render('index', [
             'dataProvider' => new ActiveDataProvider([
                 'query' => GithubUser::find()
             ])
-        ]);    
+        ]);
     }
 
     /**
@@ -43,10 +44,20 @@ class UsersController extends Controller
      */
     public function actionCreate()
     {
-        $model = new GithubUser();
+        $apiManager = new ApiManager();
+        $model = new GithubUser(['apiManager' => $apiManager]);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            if ($model->validate()) {
+
+                $userUpdater = new GithubUserUpdater($apiManager);
+                if ($userUpdater->updateUser($model)) {
+                    return $this->redirect('index');
+                }else {
+                    //TODO add alert
+                }
+            }
         }
 
         return $this->render('create', [

@@ -38,8 +38,8 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Список репозиториев', 'url' => ['/site/index']],
-            ['label' => 'Пользователи', 'url' => ['/users/index']],
+            ['label' => 'Repositories', 'url' => ['/site/index']],
+            ['label' => 'Users', 'url' => ['/users/index']],
         ],
     ]);
     NavBar::end();
