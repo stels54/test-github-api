@@ -7,6 +7,7 @@
 
 namespace app\commands;
 
+use app\components\Github\ApiManager;
 use yii\console\Controller;
 use yii\console\ExitCode;
 
