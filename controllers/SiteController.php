@@ -29,7 +29,12 @@ class SiteController extends Controller
     {
         return $this->render('index', [
             'dataProvider' => new ActiveDataProvider([
-                'query' => Repository::find()
+                'query' => Repository::find(),
+                'sort' => [
+                    'defaultOrder' => [
+                        'updated_at' => SORT_DESC,
+                    ]
+                ],
             ])
         ]);
     }

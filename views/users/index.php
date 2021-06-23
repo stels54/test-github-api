@@ -19,14 +19,22 @@ use yii\bootstrap\Html;
     <?= \yii\grid\GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
             'id',
             'login',
-            'html_url',
+            [
+                'attribute' => 'avatar_url',
+                'format' => 'html',
+                'value' => function ($model) {
+                    return Html::img($model->avatar_url,
+                        ['width' => '150px']);
+                },
+            ],
+            'html_url:url',
             'name',
             'location',
-            'avatar_url',
-            'created_at',
-            ['class' => 'yii\grid\ActionColumn']
+            'created_at:datetime',
+            ['class' => 'yii\grid\ActionColumn', 'template' => '{delete}']
         ],
     ]); ?>
 

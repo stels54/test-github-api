@@ -9,7 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property int $user_id
- * @property string|null $home_url
+ * @property string|null $html_url
  * @property string|null $description
  * @property string|null $created_at
  * @property string|null $updated_at
@@ -36,7 +36,7 @@ class TblRepositories extends \yii\db\ActiveRecord
             [['user_id'], 'integer'],
             [['description'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
-            [['home_url'], 'string', 'max' => 255],
+            [['html_url'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => TblGithubUsers::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -49,7 +49,7 @@ class TblRepositories extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
-            'home_url' => 'Home Url',
+            'html_url' => 'Html Url',
             'description' => 'Description',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

@@ -8,6 +8,8 @@
 namespace app\commands;
 
 use app\components\Github\ApiManager;
+use app\components\GithubRepositoryUpdater;
+use app\components\GithubUserUpdater;
 use yii\console\Controller;
 use yii\console\ExitCode;
 
@@ -31,5 +33,11 @@ class HelloController extends Controller
         echo $message . "\n";
 
         return ExitCode::OK;
+    }
+
+    public function actionRepo()
+    {
+        $updater = new GithubRepositoryUpdater(new ApiManager());
+        $updater->updateRepositories();
     }
 }

@@ -15,7 +15,7 @@ class m210620_203539_tbl_repositories extends Migration
         $this->createTable('tbl_repositories', [
             'id' => $this->primaryKey(),
             'user_id' => $this->integer()->notNull(),
-            'home_url' => $this->string(),
+            'html_url' => $this->string(),
             'description' => $this->text(),
             'created_at' => $this->timestamp()->null()->defaultValue(null),
             'updated_at' => $this->timestamp()->null()->defaultValue(null)

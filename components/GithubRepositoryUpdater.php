@@ -6,6 +6,7 @@ use app\components\Github\ApiManager;
 use app\components\Github\Dto\RepositoryDto;
 use app\models\GithubUser;
 use app\models\Repository;
+use yii\helpers\ArrayHelper;
 
 class GithubRepositoryUpdater
 {
@@ -26,9 +27,8 @@ class GithubRepositoryUpdater
         Repository::deleteAll();
 
         foreach ($this->getRepositoriesToSave() as $repository) {
-
             $model = new Repository();
-            $model->setAttributes($repository);
+            $model->setAttributes($repository->all());
             $model->user_id = $repository->owner['id'];
             $model->save();
         }
@@ -39,7 +39,7 @@ class GithubRepositoryUpdater
         $repositories = [];
 
         foreach ($this->getLogins() as $login) {
-            $repositories[] = $this->apiManager->getUserRepositories($login);
+            $repositories = ArrayHelper::merge($repositories, $this->apiManager->getUserRepositories($login));
         }
 
         usort($repositories, function (RepositoryDto $a, $b) {

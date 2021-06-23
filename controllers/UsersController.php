@@ -10,6 +10,7 @@ use app\models\GithubUser;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use Yii;
+use yii\web\ServerErrorHttpException;
 
 class UsersController extends Controller
 {
@@ -54,9 +55,9 @@ class UsersController extends Controller
                 $userUpdater = new GithubUserUpdater($apiManager);
                 if ($userUpdater->updateUser($model)) {
                     return $this->redirect('index');
-                }else {
-                    //TODO add alert
                 }
+
+                throw new ServerErrorHttpException('Can not save user');
             }
         }
 

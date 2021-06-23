@@ -5,16 +5,21 @@
 
 ?>
 <div class="site-index">
-    
-    <div>
+
+    <div class="row">
         
-    <?= \yii\grid\GridView::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => [
-            'id',
-            'username'
-        ],
-    ]); ?>
+        <?= \yii\grid\GridView::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => [
+                'id',
+                'user_id',
+                'user.login',
+                'html_url:url',
+                'description',
+                'created_at:datetime',
+                'updated_at:datetime'
+            ],
+        ]); ?>
 
     </div>
 </div>
