@@ -43,4 +43,11 @@ class GithubUser extends TblGithubUsers
             $this->addError($attribute, 'User not found on Github');
         }
     }
+
+    public function beforeDelete()
+    {
+        Repository::deleteAll(['user_id' => $this->id]);
+
+        return parent::beforeDelete();
+    }
 }

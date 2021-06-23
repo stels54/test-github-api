@@ -27,10 +27,17 @@ class GithubRepositoryUpdater
         Repository::deleteAll();
 
         foreach ($this->getRepositoriesToSave() as $repository) {
+
             $model = new Repository();
             $model->setAttributes($repository->all());
             $model->user_id = $repository->owner['id'];
-            $model->save();
+
+            if (!$model->save()) {
+                \Yii::error([
+                    'Message' => 'Cannot save Repository',
+                    'Errors' => $model->getErrors()
+                ]);
+            }
         }
     }
 

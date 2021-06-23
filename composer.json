@@ -21,7 +21,8 @@
         "spatie/data-transfer-object": "^1.13",
         "knplabs/github-api": "^3.0",
         "guzzlehttp/guzzle": "^7.0.1",
-        "http-interop/http-factory-guzzle": "^1.0"
+        "http-interop/http-factory-guzzle": "^1.0",
+        "yii2tech/crontab": "^1.0"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
