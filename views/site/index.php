@@ -11,8 +11,8 @@
         <?= \yii\grid\GridView::widget([
             'dataProvider' => $dataProvider,
             'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
                 'id',
-                'user_id',
                 'user.login',
                 'html_url:url',
                 'description',

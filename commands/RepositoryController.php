@@ -11,12 +11,12 @@ class RepositoryController extends Controller
 {
     public function actionUpdate()
     {
-        //try {
+        try {
             $updater = new GithubRepositoryUpdater(new ApiManager());
             $updater->updateRepositories();
-        //}catch (\Exception $e) {
-        //    \Yii::error($e);
-        //}
+        }catch (\Exception $e) {
+            \Yii::error($e);
+        }
 
         return ExitCode::OK;
     }
