@@ -51,13 +51,14 @@ class UsersController extends Controller
         if ($model->load(Yii::$app->request->post())) {
 
             if ($model->validate()) {
-
-                $userUpdater = new GithubUserUpdater($apiManager);
-                if ($userUpdater->updateUser($model)) {
-                    return $this->redirect('index');
+                try {
+                    $userUpdater = new GithubUserUpdater($apiManager);
+                    if ($userUpdater->updateUser($model)) {
+                        return $this->redirect('index');
+                    }
+                }catch (\Exception $e) {
+                    throw new ServerErrorHttpException('Can not save user');
                 }
-
-                throw new ServerErrorHttpException('Can not save user');
             }
         }
 

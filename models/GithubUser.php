@@ -7,6 +7,7 @@ use app\components\Github\ApiManager;
 use app\models\tables\TblGithubUsers;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
+use yii\web\ServerErrorHttpException;
 
 class GithubUser extends TblGithubUsers
 {
@@ -39,8 +40,14 @@ class GithubUser extends TblGithubUsers
 
     public function validateGithubUser($attribute)
     {
-        if ($this->apiManager->getUser($this->$attribute) === null) {
-            $this->addError($attribute, 'User not found on Github');
+        try {
+            $this->apiManager->getUser($this->$attribute);
+        }catch (\Exception $e) {
+            if ($e->getMessage() === "Not Found") {
+                $this->addError($attribute, 'User not found on Github');
+            }else {
+                throw new ServerErrorHttpException("Some problem with Github Api");
+            }
         }
     }
 

@@ -18,7 +18,7 @@ class GithubUserUpdater
         $this->apiManager = $apiManager;
     }
 
-    private function getGithubUserDto(string $login) :? UserDto
+    private function getGithubUserDto(string $login) : UserDto
     {
         return $this->apiManager->getUser($login);
     }

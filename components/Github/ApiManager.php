@@ -19,15 +19,9 @@ class ApiManager
         $this->client->authenticate(\Yii::$app->params['github']['token'], null, Client::AUTH_ACCESS_TOKEN);
     }
 
-    public function getUser(string $username) :? UserDto
+    public function getUser(string $username) : UserDto
     {
-        try {
-            return new UserDto($this->client->api('user')->show($username));
-        }catch (\Exception $e) {
-            $this->handleErr($e);
-        }
-
-        return null;
+        return new UserDto($this->client->api('user')->show($username));
     }
 
     /**
@@ -38,22 +32,11 @@ class ApiManager
     {
         $result = [];
 
-        try {
-            $repositories = $this->client->api('user')->repositories($username, 'owner', 'updated', 'desc');
-            foreach ($repositories as $repository) {
-                $result[] = new RepositoryDto($repository);
-            }
-        }catch (\Exception $e) {
-            $this->handleErr($e);
+        $repositories = $this->client->api('user')->repositories($username, 'owner', 'updated', 'desc');
+        foreach ($repositories as $repository) {
+            $result[] = new RepositoryDto($repository);
         }
 
         return $result;
-    }
-
-    private function handleErr(\Exception $e) : void
-    {
-        if ($e->getMessage() !== "Not Found") {
-            \Yii::error($e);
-        }
     }
 }

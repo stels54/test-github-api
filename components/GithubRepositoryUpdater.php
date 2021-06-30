@@ -6,8 +6,8 @@ use app\components\Github\ApiManager;
 use app\components\Github\Dto\RepositoryDto;
 use app\models\GithubUser;
 use app\models\Repository;
+use yii\base\Exception;
 use yii\helpers\ArrayHelper;
-use yii\web\ServerErrorHttpException;
 
 class GithubRepositoryUpdater
 {
@@ -24,7 +24,7 @@ class GithubRepositoryUpdater
     }
 
     /**
-     * @throws ServerErrorHttpException
+     * @throws Exception
      */
     public function updateRepositories() : void
     {
@@ -44,14 +44,14 @@ class GithubRepositoryUpdater
                         'Message' => 'Can not save Repository',
                         'Errors' => $model->getErrors()
                     ]);
-                    throw new ServerErrorHttpException('Can not update repositories');
+                    throw new Exception('Can not update repositories');
                 }
             }
 
             $transaction->commit();
         } catch(\Throwable $e) {
             $transaction->rollBack();
-            throw new ServerErrorHttpException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
