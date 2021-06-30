@@ -7,6 +7,7 @@ use app\components\Github\Dto\RepositoryDto;
 use app\models\GithubUser;
 use app\models\Repository;
 use yii\helpers\ArrayHelper;
+use yii\web\ServerErrorHttpException;
 
 class GithubRepositoryUpdater
 {
@@ -22,25 +23,41 @@ class GithubRepositoryUpdater
         $this->apiManager = $apiManager;
     }
 
+    /**
+     * @throws ServerErrorHttpException
+     */
     public function updateRepositories() : void
     {
-        Repository::deleteAll();
+        $db = \Yii::$app->db;
+        $transaction = $db->beginTransaction();
 
-        foreach ($this->getRepositoriesToSave() as $repository) {
+        try {
+            Repository::deleteAll();
 
-            $model = new Repository();
-            $model->setAttributes($repository->all());
-            $model->user_id = $repository->owner['id'];
+            foreach ($this->getRepositoriesToSave() as $repository) {
 
-            if (!$model->save()) {
-                \Yii::error([
-                    'Message' => 'Cannot save Repository',
-                    'Errors' => $model->getErrors()
-                ]);
+                $model = new Repository();
+                $model->setAttributes($repository->all());
+                $model->user_id = $repository->owner['id'];
+                if (!$model->save()) {
+                    \Yii::error([
+                        'Message' => 'Can not save Repository',
+                        'Errors' => $model->getErrors()
+                    ]);
+                    throw new ServerErrorHttpException('Can not update repositories');
+                }
             }
+
+            $transaction->commit();
+        } catch(\Throwable $e) {
+            $transaction->rollBack();
+            throw new ServerErrorHttpException($e->getMessage());
         }
     }
 
+    /**
+     * @return RepositoryDto[]
+     */
     private function getRepositoriesToSave() : array
     {
         $repositories = [];
@@ -56,6 +73,9 @@ class GithubRepositoryUpdater
         return array_slice($repositories, 0, self::REPOSITORIES_TO_SAVE);
     }
 
+    /**
+     * @return string[]
+     */
     private function getLogins() : array
     {
         return GithubUser::find()->select('login')->column();

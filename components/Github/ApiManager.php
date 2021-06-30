@@ -16,6 +16,7 @@ class ApiManager
     public function __construct()
     {
         $this->client = new Client();
+
     }
 
     public function getUser(string $username) :? UserDto
@@ -29,6 +30,10 @@ class ApiManager
         return null;
     }
 
+    /**
+     * @param string $username
+     * @return RepositoryDto[]
+     */
     public function getUserRepositories(string $username) : array
     {
         $result = [];
