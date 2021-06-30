@@ -16,7 +16,7 @@ class ApiManager
     public function __construct()
     {
         $this->client = new Client();
-
+        $this->client->authenticate(\Yii::$app->params['github']['token'], null, Client::AUTH_ACCESS_TOKEN);
     }
 
     public function getUser(string $username) :? UserDto

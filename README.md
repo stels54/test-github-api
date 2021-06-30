@@ -21,11 +21,25 @@ return [
 ];
 ```
 
-3. Применить миграции
+3. Добавить файл параметров config/params.php
+
+```
+<?php
+
+return [
+    ...
+    'github' => [
+        'token' => '<token>'     
+    ]
+];
+```
+ 
+
+4. Применить миграции
 
 `php yii migrate`
 
-4. Запустить cron
+5. Запустить cron
 
 `php yii cron`
 
